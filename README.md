@@ -48,13 +48,29 @@ terraform fmt
 terraform validate
 terraform plan
 terraform apply
-
+```
 
 After verifying the deployed resources in AWS, the infrastructure was removed using:
-
+```bash
 terraform destroy
+```
 
 The deployment was successfully completed with 7 resources created, and the same 7 resources were subsequently destroyed after testing.
+
+## Continuous Integration
+
+This repository uses GitHub Actions to automatically validate the Terraform configuration on pushes and pull requests.
+
+The CI workflow performs:
+
+- `terraform fmt -check`
+- `terraform init -backend=false`
+- `terraform validate`
+
+The workflow validates the Terraform configuration without automatically deploying AWS resources.
+
+`terraform apply` is intentionally excluded from the CI workflow to keep the portfolio environment safe and avoid unintended infrastructure changes.
+
 
 ## Prerequisites
 
@@ -160,17 +176,21 @@ Through this project, I gained hands-on experience with:
 - Understanding the relationship between Terraform configuration, state, providers, and actual cloud resources.
 - Using the Terraform workflow: `init`, `fmt`, `validate`, `plan`, `apply`, and `destroy`.
 - Managing Terraform files safely with Git and `.gitignore`.
+- Managing Terraform infrastructure code using Git and GitHub.
+- Implementing automated Terraform formatting and validation using GitHub Actions.
+- Troubleshooting a failed CI workflow by identifying and fixing a Terraform syntax issue, then validating the fix through a successful GitHub Actions run.
 
 
 ## Future Improvements
 
-Planned improvements for this project include:
+Potential future improvements include:
 
-- Adding an architecture diagram.
-- Adding Terraform validation with GitHub Actions.
-- Exploring remote Terraform state management.
+- Refactoring the configuration into reusable Terraform modules.
+- Adding private subnets and a multi-AZ architecture.
+- Adding an Application Load Balancer and HTTPS.
+- Exploring remote Terraform state management with S3.
 - Exploring secure AWS authentication for CI/CD using OpenID Connect (OIDC).
-
+- Extending CI/CD with additional security and static analysis checks.
 
 ## Disclaimer
 
